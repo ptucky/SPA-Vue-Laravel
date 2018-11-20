@@ -1,5 +1,5 @@
 # SPA-Vue-Laravel
-Simple Image Gallery (Vue.Js2 + Laravel)
+Simple Image Gallery (Vue.Js2 + Laravel 5.6.39)
 
 
 ```bash
@@ -12,8 +12,12 @@ cp .env.example .env
 # install composer dependencies
 composer update
 
+composer require tymon/jwt-auth
+
 # install npm dependencies
 npm install
+
+npm install vue-toastr@latest --save
 
 # generate a key for your application
 php artisan key:generate
@@ -35,6 +39,7 @@ DB_PASSWORD=
 
 # run the migration files to generate the schema
 php artisan migrate
+
 
 # run webpack and watch for changes
 npm run watch
