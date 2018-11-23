@@ -2,6 +2,24 @@
 Simple Image Gallery (Vue.Js2 + Laravel 5.6.39)
 
 
+![2018-11-23](https://firebasestorage.googleapis.com/v0/b/look24-notification.appspot.com/o/OblongElasticAcouchi-size_restricted.gif?alt=media&token=b92685fa-a187-4bd2-8162-b2a030f4162b)
+
+
+## Conponenets
+* Vue Router 
+* Vuex 
+* JWT (Json Web Token) https://jwt-auth.readthedocs.io/en/develop/laravel-installation/
+  ```bash
+   composer require tymon/jwt-auth
+  ```
+  
+* vue-toastr (Toast popup)
+  ```bash
+   npm install vue-toastr@latest --save
+  ```
+
+## Instruction
+
 ```bash
 # go into the project
 cd YOUR_PROJECT
