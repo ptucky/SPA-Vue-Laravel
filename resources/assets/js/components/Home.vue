@@ -8,12 +8,12 @@
                         
                         <div class="row">
                             <div class="col-md-2">Total Size:</div>
-                            <div class="col-md-10">0.00MB(0B)</div>
+                            <div class="col-md-10">{{ disk.mb }} MB ({{ disk.b }}B)</div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-2">No of files:</div>
-                            <div class="col-md-10">0</div>
+                            <div class="col-md-10">{{ disk.no_file }}</div>
                         </div>
 
                     </div>
@@ -37,13 +37,13 @@
                             <tbody>
                                 <tr>
                                     <td>image/jpg</td>
-                                    <td>0</td>
-                                    <td>0</td>
+                                    <td>{{ disk.jpg }}</td>
+                                    <td>{{ disk.jpg_size }}</td>
                                 </tr>
                                 <tr>
                                     <td>image/png</td>
-                                    <td>0</td>
-                                    <td>0</td>
+                                    <td>{{ disk.png }}</td>
+                                    <td>{{ disk.png_size }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -53,3 +53,27 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+  mounted() {
+    this.getDiskUsage();
+  },
+  data: () => ({
+    disk: []
+  }),
+  methods: {
+    getDiskUsage() {
+      //Get
+      axios
+        .get(`/api/diskUsage/${this.$store.getters.currentUser.id}`)
+        .then(res => {
+          this.disk = res.data;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+};
+</script>

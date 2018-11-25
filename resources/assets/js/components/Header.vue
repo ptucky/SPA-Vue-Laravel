@@ -8,7 +8,7 @@
                         <router-link to="/" class="nav-link">Home</router-link>
                     </li>
                     <li>
-                        <router-link to="/imageGallery" class="nav-link">Gallery</router-link>
+                        <router-link to="/gallery" class="nav-link">Gallery</router-link>
                     </li>
                 </ul>
             </template>

@@ -11895,20 +11895,18 @@ window._ = __webpack_require__(18);
 
 try {
     window.$ = window.jQuery = __webpack_require__(6);
-
     __webpack_require__(20);
 } catch (e) {}
 
 window.axios = __webpack_require__(22);
-
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-/* 
-let token = document.head.querySelector('meta[name="csrf-token"]');
+
+var token = document.head.querySelector('meta[name="csrf-token"]');
 if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-} */
+}
 
 /***/ }),
 /* 18 */
@@ -51253,8 +51251,7 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
         currentUser: user,
         isLoggedIn: !!user,
         loading: false,
-        auth_error: null,
-        customers: []
+        auth_error: null
     },
     getters: {
         isLoading: function isLoading(state) {
@@ -51268,9 +51265,6 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
         },
         authError: function authError(state) {
             return state.auth_error;
-        },
-        customers: function customers(state) {
-            return state.customers;
         }
     },
     mutations: {
@@ -51294,19 +51288,11 @@ var user = Object(__WEBPACK_IMPORTED_MODULE_0__helpers_auth__["a" /* getLocalUse
             localStorage.removeItem("user");
             state.isLoggedIn = false;
             state.currentUser = null;
-        },
-        updateCustomers: function updateCustomers(state, payload) {
-            state.customers = payload;
         }
     },
     actions: {
         login: function login(context) {
             context.commit("login");
-        },
-        getCustomers: function getCustomers(context) {
-            axios.get('/api/customers').then(function (response) {
-                context.commit('updateCustomers', response.data.customers);
-            });
         }
     }
 });
@@ -51538,10 +51524,7 @@ var render = function() {
                     [
                       _c(
                         "router-link",
-                        {
-                          staticClass: "nav-link",
-                          attrs: { to: "/imageGallery" }
-                        },
+                        { staticClass: "nav-link", attrs: { to: "/gallery" } },
                         [_vm._v("Gallery")]
                       )
                     ],
@@ -53004,7 +52987,7 @@ var routes = [{
         requiresAuth: true
     }
 }, {
-    path: '/imageGallery',
+    path: '/gallery',
     component: __WEBPACK_IMPORTED_MODULE_3__components_ImageGallery_vue___default.a,
     meta: {
         requiresAuth: true
@@ -53018,7 +53001,7 @@ var routes = [{
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(56)
 /* template */
 var __vue_template__ = __webpack_require__(57)
 /* template functional */
@@ -53059,7 +53042,93 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 56 */,
+/* 56 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    this.getDiskUsage();
+  },
+
+  data: function data() {
+    return {
+      disk: []
+    };
+  },
+  methods: {
+    getDiskUsage: function getDiskUsage() {
+      var _this = this;
+
+      //Get
+      axios.get("/api/diskUsage/" + this.$store.getters.currentUser.id).then(function (res) {
+        _this.disk = res.data;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  }
+});
+
+/***/ }),
 /* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -53067,84 +53136,86 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "login row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card card-default" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Disk Usage Overview")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-2" }, [_vm._v("Total Size:")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _vm._v(
+                  _vm._s(_vm.disk.mb) + " MB (" + _vm._s(_vm.disk.b) + "B)"
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-2" }, [_vm._v("No of files:")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-10" }, [
+                _vm._v(_vm._s(_vm.disk.no_file))
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticStyle: { clear: "both", height: "30px" } }),
+    _vm._v(" "),
+    _c("div", { staticClass: "login row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card card-default" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Disk Usage Compositions")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("tbody", [
+                _c("tr", [
+                  _c("td", [_vm._v("image/jpg")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.disk.jpg))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.disk.jpg_size))])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("td", [_vm._v("image/png")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.disk.png))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm.disk.png_size))])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "login row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Disk Usage Overview")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-2" }, [_vm._v("Total Size:")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-10" }, [_vm._v("0.00MB(0B)")])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-2" }, [
-                  _vm._v("No of files:")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-10" }, [_vm._v("0")])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticStyle: { clear: "both", height: "30px" } }),
-      _vm._v(" "),
-      _c("div", { staticClass: "login row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card card-default" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Disk Usage Compositions")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("table", { staticClass: "table" }, [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("No of files")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Size")])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tbody", [
-                  _c("tr", [
-                    _c("td", [_vm._v("image/jpg")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("0")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("0")])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [_vm._v("image/png")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("0")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("0")])
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("No of files")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Size")])
       ])
     ])
   }
@@ -54055,9 +54126,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     mounted: function mounted() {
-        console.log('Component mounted.');
+        //console.log('Component mounted.')
     },
 
     components: {
@@ -54151,7 +54223,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\n.uploader[data-v-b62a887c] {\n  width: 100%;\n  background: #2196F3;\n  color: #fff;\n  padding: 40px 15px;\n  text-align: center;\n  border-radius: 10px;\n  border: 3px dashed #fff;\n  font-size: 20px;\n  position: relative;\n}\n.uploader.dragging[data-v-b62a887c] {\n    background: #fff;\n    color: #2196F3;\n    border: 3px dashed #2196F3;\n}\n.uploader.dragging .file-input label[data-v-b62a887c] {\n      background: #2196F3;\n      color: #fff;\n}\n.uploader i[data-v-b62a887c] {\n    font-size: 85px;\n}\n.uploader .file-input[data-v-b62a887c] {\n    width: 200px;\n    margin: auto;\n    height: 68px;\n    position: relative;\n}\n.uploader .file-input label[data-v-b62a887c],\n    .uploader .file-input input[data-v-b62a887c] {\n      background: #fff;\n      color: #2196F3;\n      width: 100%;\n      position: absolute;\n      left: 0;\n      top: 0;\n      padding: 10px;\n      border-radius: 4px;\n      margin-top: 7px;\n      cursor: pointer;\n}\n.uploader .file-input input[data-v-b62a887c] {\n      opacity: 0;\n      z-index: -2;\n}\n.uploader .images-preview[data-v-b62a887c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    margin-top: 20px;\n}\n.uploader .images-preview .img-wrapper[data-v-b62a887c] {\n      width: 160px;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      margin: 10px;\n      height: 150px;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      background: #fff;\n      -webkit-box-shadow: 5px 5px 20px #3e3737;\n              box-shadow: 5px 5px 20px #3e3737;\n}\n.uploader .images-preview .img-wrapper img[data-v-b62a887c] {\n        max-height: 105px;\n}\n.uploader .images-preview .details[data-v-b62a887c] {\n      font-size: 12px;\n      background: #fff;\n      color: #000;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      -webkit-box-align: self-start;\n          -ms-flex-align: self-start;\n              align-items: self-start;\n      padding: 3px 6px;\n}\n.uploader .images-preview .details .name[data-v-b62a887c] {\n        overflow: hidden;\n        height: 18px;\n}\n.uploader .upload-control[data-v-b62a887c] {\n    position: absolute;\n    width: 100%;\n    background: #fff;\n    top: 0;\n    left: 0;\n    border-top-left-radius: 7px;\n    border-top-right-radius: 7px;\n    padding: 10px;\n    padding-bottom: 4px;\n    text-align: right;\n}\n.uploader .upload-control button[data-v-b62a887c], .uploader .upload-control label[data-v-b62a887c] {\n      background: #2196F3;\n      border: 2px solid #03A9F4;\n      border-radius: 3px;\n      color: #fff;\n      font-size: 15px;\n      cursor: pointer;\n}\n.uploader .upload-control label[data-v-b62a887c] {\n      padding: 2px 5px;\n      margin-right: 10px;\n}\n", ""]);
+exports.push([module.i, "\n.uploader[data-v-b62a887c] {\n  width: 100%;\n  background: #2196f3;\n  color: #fff;\n  padding: 40px 15px;\n  text-align: center;\n  border-radius: 10px;\n  border: 3px dashed #fff;\n  font-size: 20px;\n  position: relative;\n}\n.uploader.dragging[data-v-b62a887c] {\n    background: #fff;\n    color: #2196f3;\n    border: 3px dashed #2196f3;\n}\n.uploader.dragging .file-input label[data-v-b62a887c] {\n      background: #2196f3;\n      color: #fff;\n}\n.uploader i[data-v-b62a887c] {\n    font-size: 85px;\n}\n.uploader .file-input[data-v-b62a887c] {\n    width: 200px;\n    margin: auto;\n    height: 68px;\n    position: relative;\n}\n.uploader .file-input label[data-v-b62a887c],\n    .uploader .file-input input[data-v-b62a887c] {\n      background: #fff;\n      color: #2196f3;\n      width: 100%;\n      position: absolute;\n      left: 0;\n      top: 0;\n      padding: 10px;\n      border-radius: 4px;\n      margin-top: 7px;\n      cursor: pointer;\n}\n.uploader .file-input input[data-v-b62a887c] {\n      opacity: 0;\n      z-index: -2;\n}\n.uploader .images-preview[data-v-b62a887c] {\n    display: -webkit-box;\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-wrap: wrap;\n        flex-wrap: wrap;\n    margin-top: 20px;\n}\n.uploader .images-preview .img-wrapper[data-v-b62a887c] {\n      width: 160px;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      margin: 10px;\n      height: 150px;\n      -webkit-box-pack: justify;\n          -ms-flex-pack: justify;\n              justify-content: space-between;\n      background: #fff;\n      -webkit-box-shadow: 5px 5px 20px #3e3737;\n              box-shadow: 5px 5px 20px #3e3737;\n}\n.uploader .images-preview .img-wrapper img[data-v-b62a887c] {\n        max-height: 105px;\n}\n.uploader .images-preview .details[data-v-b62a887c] {\n      font-size: 12px;\n      background: #fff;\n      color: #000;\n      display: -webkit-box;\n      display: -ms-flexbox;\n      display: flex;\n      -webkit-box-orient: vertical;\n      -webkit-box-direction: normal;\n          -ms-flex-direction: column;\n              flex-direction: column;\n      -webkit-box-align: self-start;\n          -ms-flex-align: self-start;\n              align-items: self-start;\n      padding: 3px 6px;\n}\n.uploader .images-preview .details .name[data-v-b62a887c] {\n        overflow: hidden;\n        height: 18px;\n}\n.uploader .upload-control[data-v-b62a887c] {\n    position: absolute;\n    width: 100%;\n    background: #fff;\n    top: 0;\n    left: 0;\n    border-top-left-radius: 7px;\n    border-top-right-radius: 7px;\n    padding: 10px;\n    padding-bottom: 4px;\n    text-align: right;\n}\n.uploader .upload-control button[data-v-b62a887c],\n    .uploader .upload-control label[data-v-b62a887c] {\n      background: #2196f3;\n      border: 2px solid #03a9f4;\n      border-radius: 3px;\n      color: #fff;\n      font-size: 15px;\n      cursor: pointer;\n}\n.uploader .upload-control label[data-v-b62a887c] {\n      padding: 2px 5px;\n      margin-right: 10px;\n}\n.uploader .is-24x24 img[data-v-b62a887c] {\n    width: 150px;\n}\nul.gall-menu[data-v-b62a887c] {\n  list-style: none;\n  display: -webkit-box;\n  display: -ms-flexbox;\n  display: flex;\n  padding-top: 10px;\n}\nul.gall-menu a.delete span[data-v-b62a887c],\n  ul.gall-menu a.view span[data-v-b62a887c] {\n    font-size: 20px;\n}\n", ""]);
 
 // exports
 
@@ -54198,101 +54270,177 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            isDragging: false,
-            dragCount: 0,
-            files: [],
-            images: []
-        };
-    },
-    methods: {
-        OnDragEnter: function OnDragEnter(e) {
-            e.preventDefault();
+  mounted: function mounted() {
+    this.fetchDataGallery();
+  },
 
-            this.dragCount++;
-            this.isDragging = true;
-
-            return false;
-        },
-        OnDragLeave: function OnDragLeave(e) {
-            e.preventDefault();
-            this.dragCount--;
-
-            if (this.dragCount <= 0) this.isDragging = false;
-        },
-        onInputChange: function onInputChange(e) {
-            var _this = this;
-
-            var files = e.target.files;
-
-            Array.from(files).forEach(function (file) {
-                return _this.addImage(file);
-            });
-        },
-        onDrop: function onDrop(e) {
-            var _this2 = this;
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            this.isDragging = false;
-
-            var files = e.dataTransfer.files;
-
-            Array.from(files).forEach(function (file) {
-                return _this2.addImage(file);
-            });
-        },
-        addImage: function addImage(file) {
-            var _this3 = this;
-
-            //if (!file.type.match('image.*')) {
-            if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                this.$toastr.e(file.name + ' is not an image');
-                return;
-            }
-
-            this.files.push(file);
-
-            var img = new Image(),
-                reader = new FileReader();
-
-            reader.onload = function (e) {
-                return _this3.images.push(e.target.result);
-            };
-
-            reader.readAsDataURL(file);
-        },
-        getFileSize: function getFileSize(size) {
-            var fSExt = ['Bytes', 'KB', 'MB', 'GB'];
-            var i = 0;
-
-            while (size > 900) {
-                size /= 1024;
-                i++;
-            }
-
-            return Math.round(size * 100) / 100 + ' ' + fSExt[i];
-        },
-        upload: function upload() {
-            var _this4 = this;
-
-            var formData = new FormData();
-
-            this.files.forEach(function (file) {
-                formData.append('images[]', file, file.name);
-            });
-
-            axios.post('/images-upload', formData).then(function (response) {
-                _this4.$toastr.s('All images uplaoded successfully');
-                _this4.images = [];
-                _this4.files = [];
-            });
-        }
+  data: function data() {
+    return {
+      isDragging: false,
+      dragCount: 0,
+      files: [],
+      images: [],
+      galleries: []
+    };
+  },
+  computed: {
+    currentUser: function currentUser() {
+      return this.$store.getters.currentUser;
     }
+  },
+  methods: {
+    getImage: function getImage(imgName) {
+      return "storage/" + this.$store.getters.currentUser.id + "/" + imgName;
+    },
+    OnDragEnter: function OnDragEnter(e) {
+      e.preventDefault();
+
+      this.dragCount++;
+      this.isDragging = true;
+
+      return false;
+    },
+    OnDragLeave: function OnDragLeave(e) {
+      e.preventDefault();
+      this.dragCount--;
+
+      if (this.dragCount <= 0) this.isDragging = false;
+    },
+    onInputChange: function onInputChange(e) {
+      var _this = this;
+
+      var files = e.target.files;
+      Array.from(files).forEach(function (file) {
+        return _this.addImage(file);
+      });
+    },
+    onDrop: function onDrop(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      this.isDragging = false;
+      var files = e.dataTransfer.files;
+
+      Array.from(files).forEach(function (file) {
+        return _this2.addImage(file);
+      });
+    },
+    addImage: function addImage(file) {
+      var _this3 = this;
+
+      //if (!file.type.match('image.*')) {
+      if (!file.type.match("image/jpeg") && !file.type.match("image/png")) {
+        this.$toastr.e(file.name + " is not an image");
+        return;
+      }
+
+      this.files.push(file);
+      var img = new Image(),
+          reader = new FileReader();
+
+      reader.onload = function (e) {
+        return _this3.images.push(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    },
+    getFileSize: function getFileSize(size) {
+      var fSExt = ["Bytes", "KB", "MB", "GB"];
+      var i = 0;
+
+      while (size > 900) {
+        size /= 1024;
+        i++;
+      }
+
+      return Math.round(size * 100) / 100 + " " + fSExt[i];
+    },
+    fetchDataGallery: function fetchDataGallery() {
+      var _this4 = this;
+
+      //Get
+      //this.axios.defaults.baseURL = '/';
+      axios.get("/api/imageGallery/" + this.$store.getters.currentUser.id).then(function (res) {
+        _this4.galleries = res.data;
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    upload: function upload() {
+      var _this5 = this;
+
+      //Add
+      //Send as FormData
+      var formData = new FormData();
+      this.files.forEach(function (file) {
+        formData.append("images[]", file, file.name);
+      });
+
+      // Append uId
+      formData.append("user_id", this.$store.getters.currentUser.id);
+      axios.post("/images-upload", formData, {
+        onUploadProgress: function onUploadProgress(progressEvent) {
+          //console.log(progressEvent.loaded / progressEvent.total)
+        }
+      }).then(function (response) {
+        _this5.images = [];
+        _this5.files = [];
+
+        response.data.user_id = _this5.$store.getters.currentUser.id;
+        axios.post("/api/imageGallery", response.data).then(function (res) {
+          var i;
+          for (i = 0; i < res.data.length; i++) {
+            _this5.galleries.unshift(res.data[i]);
+          }
+
+          response.data = [];
+          _this5.$toastr.s("Images Update successfully");
+        }).catch(function (err) {
+          console.log(err);
+        });
+      }).catch(function (err) {
+        console.log(err);
+      });
+    },
+    deleteGallery: function deleteGallery(tk) {
+      var _this6 = this;
+
+      //Delete
+      //this.axios.defaults.baseURL = '/';
+      axios.delete("/api/imageGallery/" + tk.id + "/" + this.$store.getters.currentUser.id).then(function (res) {
+        var taskIndex = _this6.galleries.indexOf(tk);
+        _this6.galleries.splice(taskIndex, 1);
+        console.log("Delete");
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -54399,6 +54547,53 @@ var render = function() {
                   textContent: _vm._s(_vm.getFileSize(_vm.files[index].size))
                 }
               })
+            ])
+          ])
+        })
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "images-preview" },
+        _vm._l(_vm.galleries, function(tk) {
+          return _c("div", { key: tk.id, staticClass: "img-wrapper" }, [
+            _c("img", { attrs: { src: _vm.getImage(tk.image_name) } }),
+            _vm._v(" "),
+            _c("div", { staticClass: "details" }, [
+              _c("ul", { staticClass: "gall-menu" }, [
+                _c("li", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "delete",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.deleteGallery(tk)
+                        }
+                      }
+                    },
+                    [_c("span", { staticClass: "oi oi-trash" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("li", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "view",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                        }
+                      }
+                    },
+                    [_c("span", { staticClass: "oi oi-zoom-in" })]
+                  )
+                ])
+              ])
             ])
           ])
         })

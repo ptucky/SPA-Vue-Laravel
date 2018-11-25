@@ -9,7 +9,7 @@ import MainApp from './components/MainApp.vue';
 import Toastr from "vue-toastr";
 
 import {routes} from './routes';
-import { initialize } from './helpers/initialize'
+import {initialize} from './helpers/initialize'
 
 Vue.use(VueRouter);
 Vue.use(Vuex);

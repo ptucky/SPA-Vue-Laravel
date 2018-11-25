@@ -16,9 +16,10 @@
 
 <script>
     import ImageUploader from './ImageUploader';
+    
     export default {
         mounted() {
-            console.log('Component mounted.')
+            //console.log('Component mounted.')
         },
         components: {
             ImageUploader

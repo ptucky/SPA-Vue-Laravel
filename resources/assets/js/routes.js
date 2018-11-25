@@ -20,7 +20,7 @@ export const routes = [
         }
     },
     {
-        path: '/imageGallery',
+        path: '/gallery',
         component: ImageGallery,
         meta: {
             requiresAuth: true
