@@ -35,7 +35,12 @@ composer require tymon/jwt-auth
 # install npm dependencies
 npm install
 
+# install Toastr
 npm install vue-toastr@latest --save
+
+# Make seem link storage
+php artisan storage:link
+
 
 # generate a key for your application
 php artisan key:generate
