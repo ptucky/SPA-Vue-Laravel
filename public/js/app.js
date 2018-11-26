@@ -54462,7 +54462,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this6 = this;
 
       //Delete
-      //this.axios.defaults.baseURL = '/';
       axios.delete("/api/imageGallery/" + tk.id + "/" + this.$store.getters.currentUser.id).then(function (res) {
         var taskIndex = _this6.galleries.indexOf(tk);
         _this6.galleries.splice(taskIndex, 1);

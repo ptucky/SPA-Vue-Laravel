@@ -208,7 +208,6 @@ export default {
     },
     deleteGallery(tk) {
       //Delete
-      //this.axios.defaults.baseURL = '/';
       axios
         .delete(
           `/api/imageGallery/${tk.id}/${this.$store.getters.currentUser.id}`
