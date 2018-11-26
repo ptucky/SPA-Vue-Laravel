@@ -2,6 +2,10 @@
 
 Simple Image Gallery (Vue.Js2 + Laravel 5.6.39)
 
+
+[![VDO](https://firebasestorage.googleapis.com/v0/b/look24-notification.appspot.com/o/img-youtube.png?alt=media&token=5731f503-e934-4f9d-8587-3c0e6d057a38)](https://youtu.be/HGjzpV7ah3U)
+
+
 ![2018-11-23](https://firebasestorage.googleapis.com/v0/b/look24-notification.appspot.com/o/OblongElasticAcouchi-size_restricted.gif?alt=media&token=b92685fa-a187-4bd2-8162-b2a030f4162b)
 
 ## Conponenets
