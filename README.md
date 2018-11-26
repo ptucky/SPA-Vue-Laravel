@@ -34,11 +34,14 @@ composer update
 ### install jwt-auth
 composer require tymon/jwt-auth
 
-
 ### install npm dependencies
 npm install
 
+### Install Toast
 npm install vue-toastr@latest --save
+
+### Install kightbox
+npm install vue-image-lightbox vue-lazyload
 
 ### generate a key for your application
 php artisan key:generate

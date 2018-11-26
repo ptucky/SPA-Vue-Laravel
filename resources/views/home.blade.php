@@ -12,11 +12,13 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/open-iconic/1.1.1/font/css/open-iconic-bootstrap.css" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/vue-image-lightbox.min.css') }}" rel="stylesheet"/>
     </head>
     <body>
         <div id="app">
             <main-app/>
         </div>
         <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/vue-image-lightbox.min.js') }}"></script>
     </body>
 </html>

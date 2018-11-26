@@ -32,9 +32,9 @@
             </div>
         </div>
 
-       <div class="images-preview">
-            <div class="img-wrapper" v-for="tk in galleries" :key="tk.id">
-                <img :src="getImage(tk.image_name)">
+        <div class="images-preview">
+            <div class="img-wrapper" v-for="(tk, index) in galleries" :key="tk.id"> 
+                <img class="can-view" v-lazy="getImage(tk.image_name)" @click="openGallery(index)">
                 <div class="details">
                     <ul class="gall-menu">
                         <li>
@@ -43,20 +43,24 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="view" @click.prevent="">
+                            <a href="#" class="view" @click="openGallery(index)">
                                 <span class="oi oi-zoom-in"></span>
                             </a>
                         </li>
                     </ul>
-                    
                 </div>
             </div>
+            <LightBox :images="galleriesLightbox" ref="lightbox" :show-caption="true" :show-light-box="false"></LightBox>
         </div> 
 
     </div>
 </template>
 
+
+
 <script>
+import LightBox from "vue-image-lightbox";
+
 export default {
   mounted() {
     this.fetchDataGallery();
@@ -66,8 +70,12 @@ export default {
     dragCount: 0,
     files: [],
     images: [],
-    galleries: []
+    galleries: [],
+    galleriesLightbox: []
   }),
+  components: {
+    LightBox
+  },
   computed: {
     currentUser() {
       return this.$store.getters.currentUser;
@@ -76,6 +84,9 @@ export default {
   methods: {
     getImage(imgName) {
       return "storage/" + this.$store.getters.currentUser.id + "/" + imgName;
+    },
+    openGallery(index) {
+      this.$refs.lightbox.showImage(index);
     },
     OnDragEnter(e) {
       e.preventDefault();
@@ -135,7 +146,21 @@ export default {
       axios
         .get(`/api/imageGallery/${this.$store.getters.currentUser.id}`)
         .then(res => {
+          //Set default
           this.galleries = res.data;
+
+          // Set Lightbox data
+          var i;
+          var dataArr = [];
+          for (i = 0; i < res.data.length; i++) {
+            dataArr[i] = {
+              thumb: this.getImage(res.data[i].image_name),
+              src: this.getImage(res.data[i].image_name),
+              caption: res.data[i].image_name, // Optional
+              srcset: "" // Optional
+            };
+          }
+          this.galleriesLightbox = dataArr;
         })
         .catch(err => {
           console.log(err);
@@ -329,9 +354,15 @@ ul.gall-menu {
   display: flex;
   padding-top: 10px;
 
+  li {
+    padding: 0 5px;
+  }
   a.delete span,
   a.view span {
     font-size: 20px;
   }
+}
+.can-view {
+  cursor: pointer;
 }
 </style>

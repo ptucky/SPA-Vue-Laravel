@@ -21,6 +21,8 @@
     },
     "dependencies": {
         "validate.js": "^0.12.0",
+        "vue-image-lightbox": "^6.0.1",
+        "vue-lazyload": "^1.2.6",
         "vue-router": "^3.0.1",
         "vue-toastr": "^2.0.16",
         "vuex": "^3.0.1"
